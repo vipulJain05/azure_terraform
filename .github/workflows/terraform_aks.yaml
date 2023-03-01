@@ -30,6 +30,8 @@ jobs:
         run: |
           export TF_LOG=trace
           export TF_VAR_ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
+          terraform plan -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} \
+          -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}}
       
 
       - name: Terraform plan

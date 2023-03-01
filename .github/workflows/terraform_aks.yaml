@@ -16,9 +16,9 @@ jobs:
 
       - name: print values
         run: |
-          cat ${{ secrets.AZURE_CLIENT_ID }}
-          cat ${{ secrets.ARM_TENANT_ID }}
-          cat ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          echo ${{ secrets.AZURE_CLIENT_ID }}
+          echo ${{ secrets.ARM_TENANT_ID }}
+          echo ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: 'Az CLI login'
         uses: azure/login@v1

@@ -19,22 +19,26 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: "1.1.4"
+        
+      - name: Set Terraform variables
+        run: |
+          export TF_VAR_ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
 
       - name: Terraform init
         run: terraform init
 
       - name: Terraform validate
         run: terraform validate
+      
 
       - name: Terraform plan
         run: |
-          terraform plan -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} \
-          -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} \ 
-          -var ssh_public_key= ${{secrets.SSH_PUBLIC_KEY}}
+          terraform plan -var aks_service_principal_app_id=${AKS_SERVICE_PRINCIPAL_APP_ID} \
+          -var aks_service_principal_client_secret=${aks_service_principal_client_secret}
 
       - name: Terraform apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform apply  -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} -var ssh_public_key= ${{secrets.SSH_PUBLIC_KEY}} -auto-approve 
+        run: terraform apply  -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} -auto-approve 
 
       - name: Get kubeconfig
         run: |

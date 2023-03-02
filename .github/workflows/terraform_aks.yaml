@@ -28,13 +28,16 @@ jobs:
 
       - name: Set Terraform variables
         run: |
+          cd aks_terraform/
           export TF_VAR_ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
           terraform plan -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} \
           -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}}
           terraform apply  -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} -auto-approve 
-
-      - name: Get kubeconfig
-        run: |
           kubeconfig=$(terraform output -raw kube_config)
           echo "$kubeconfig" | base64 --decode > kubeconfig.yaml
-        shell: bash
+
+      # - name: Get kubeconfig
+      #   run: |
+      #     kubeconfig=$(terraform output -raw kube_config)
+      #     echo "$kubeconfig" | base64 --decode > kubeconfig.yaml
+      #   shell: bash

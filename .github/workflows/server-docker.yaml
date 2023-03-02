@@ -27,12 +27,13 @@ jobs:
         push: true
         tags: quay.io/vipul05/azure_learning:latest
 
+    - name: Configure kubectl
+      run: |
+        az aks get-credentials --resource-group rg-climbing-sole --name k8stest
+        kubectl get pods -A
 
-# - name: Build, tag, and push image to Amazon ECR
-#       env:
-#         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#         ECR_REPOSITORY: export-generator
-#         IMAGE_TAG: ${{ github.sha }}-${{ env.time }}
-#       run: |
-#         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:development-$IMAGE_TAG -f exportGeneratorJs/Dockerfile .
-#         docker push $ECR_REGISTRY/$ECR_REPOSITORY:development-$IMAGE_TAG
+    - name: Deploy the image on aks
+      run: |
+        kubectl apply -f deployment.yaml
+
+    

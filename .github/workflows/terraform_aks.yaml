@@ -30,6 +30,7 @@ jobs:
         run: |
           cd aks_terraform/
           export TF_VAR_ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
+          terraform init
           terraform plan -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} \
           -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}}
           terraform apply  -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} -auto-approve 

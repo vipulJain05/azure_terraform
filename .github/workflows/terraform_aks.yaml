@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform creation
 on:
   workflow_dispatch:
 
@@ -33,7 +33,6 @@ jobs:
           -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}}
           terraform apply  -var aks_service_principal_app_id=${{secrets.AKS_SERVICE_PRINCIPAL_APP_ID}} -var aks_service_principal_client_secret=${{secrets.AKS_SERVICE_PRINCIPAL_CLIENT_SECRET}} -auto-approve 
           kubeconfig=$(terraform output -raw kube_config)
-          echo "$kubeconfig" | base64 --decode > kubeconfig.yaml
 
       # - name: Get kubeconfig
       #   run: |

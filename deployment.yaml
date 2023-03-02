@@ -12,6 +12,7 @@ spec:
       labels:
         app: api
     spec:
+      imagePullPolicy: Always
       containers:
       - name: api-server
         image: quay.io/vipul05/azure_learning:latest

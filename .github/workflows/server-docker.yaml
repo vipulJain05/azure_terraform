@@ -39,7 +39,8 @@ jobs:
 
     - name: Deploy the image on aks
       run: |
-        kubectl set image deployment/api quay.io/vipul05/azure_learning:${{ github.sha }}
+        kubectl patch deployment api -p \
+  '{"spec":{"template":{"spec":{"containers":[{"name":"api-server","image":"quay.io/vipul05/azure_learning:${{ github.sha }}"}]}}}}'
 #kubectl apply -f deployment.yaml
 
     

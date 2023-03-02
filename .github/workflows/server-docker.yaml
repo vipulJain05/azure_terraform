@@ -25,7 +25,7 @@ jobs:
       with:
         context: server/
         push: true
-        tags: quay.io/vipul05/azure_learning:latest
+        tags: quay.io/vipul05/azure_learning:${{ github.sha }}
 
     - name: Log in with Azure
       uses: azure/login@v1
@@ -39,6 +39,7 @@ jobs:
 
     - name: Deploy the image on aks
       run: |
-        kubectl apply -f deployment.yaml
+        kubectl set image deployment/api quay.io/vipul05/azure_learning:${{ github.sha }}
+#kubectl apply -f deployment.yaml
 
     

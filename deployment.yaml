@@ -13,7 +13,7 @@ spec:
         app: api
     spec:
       containers:
-      - name: vipul05/azure_learning
+      - name: api-server
         image: quay.io/vipul05/azure_learning:latest
         ports:
         - containerPort: 80

@@ -27,6 +27,11 @@ jobs:
         push: true
         tags: quay.io/vipul05/azure_learning:latest
 
+    - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
     - name: Configure kubectl
       run: |
         az aks get-credentials --resource-group rg-climbing-sole --name k8stest
